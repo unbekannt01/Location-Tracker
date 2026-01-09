@@ -1,0 +1,90 @@
+{
+  "rules": {
+    "users": {
+      ".read": true,
+      ".write": true,
+      "$userId": {
+        ".read": true,
+        ".write": true,
+        "id": { ".validate": "newData.isString()" },
+        "email": { ".validate": "newData.isString()" },
+        "username": { ".validate": "newData.isString()" },
+        "password": { ".validate": "newData.isString()" },
+        "role": { ".validate": "newData.val() === 'admin' || newData.val() === 'member'" },
+        "groupId": { ".validate": "newData.isString() || !newData.exists()" },
+        "createdAt": { ".validate": "newData.isNumber()" },
+        "isActive": { ".validate": "newData.isBoolean() || !newData.exists()" }
+      },
+      "admin": {
+        ".read": true,
+        ".write": false,
+        ".validate": false
+      }
+    },
+    
+    "groups": {
+      ".read": true,
+      ".write": true,
+      "$groupId": {
+        ".read": true,
+        ".write": true,
+        "id": { ".validate": "newData.isString()" },
+        "name": { ".validate": "newData.isString()" },
+        "createdAt": { ".validate": "newData.isNumber()" },
+        "members": {
+          ".read": true,
+          ".write": true,
+          "$memberId": {
+            ".read": true,
+            ".write": true,
+            "id": { ".validate": "newData.isString()" },
+            "email": { ".validate": "newData.isString()" },
+            "username": { ".validate": "newData.isString()" },
+            "password": { ".validate": "newData.isString()" },
+            "createdAt": { ".validate": "newData.isNumber()" },
+            "isActive": { ".validate": "newData.isBoolean()" }
+          }
+        },
+        "locations": {
+          ".read": true,
+          ".write": true,
+          "$memberId": {
+            ".read": true,
+            ".write": true,
+            "lat": { ".validate": "newData.isNumber()" },
+            "lng": { ".validate": "newData.isNumber()" },
+            "accuracy": { ".validate": "newData.isNumber()" },
+            "timestamp": { ".validate": "newData.isNumber()" },
+            "name": { ".validate": "newData.isString()" }
+          }
+        }
+      }
+    },
+    
+    "locations": {
+      ".read": true,
+      ".write": true,
+      "$groupId": {
+        "$uid": {
+          ".validate": "newData.hasChildren(['latitude', 'longitude', 'timestamp'])",
+          "latitude": { ".validate": "newData.isNumber()" },
+          "longitude": { ".validate": "newData.isNumber()" },
+          "timestamp": { ".validate": "newData.isNumber()" },
+          "accuracy": { ".validate": "newData.isNumber()" }
+        }
+      }
+    },
+    
+    "emailVerification": {
+      ".read": true,
+      ".write": true,
+      "$uid": {
+        ".validate": "newData.hasChildren(['email', 'invitationCode'])",
+        "email": { ".validate": "newData.isString()" },
+        "invitationCode": { ".validate": "newData.isString()" },
+        "verified": { ".validate": "newData.isBoolean()" },
+        "verifiedAt": { ".validate": "newData.isNumber() || !newData.exists()" }
+      }
+    }
+  }
+}
