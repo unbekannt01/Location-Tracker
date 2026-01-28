@@ -7,39 +7,60 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow access to your location for family tracking",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow access to your location for family tracking",
+        "NSCameraUsageDescription": "Allow camera access for video calls",
+        "NSMicrophoneUsageDescription": "Allow microphone access for video calls",
         "UIBackgroundModes": ["location"]
       }
     },
+
     "android": {
+      "package": "com.familylocationtracker.app",
+
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
-      "package": "com.familylocationtracker.app",
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION", "ACCESS_BACKGROUND_LOCATION"],
-      "googleMapsApiKey": "GOOGLE_MAP_API_KEY"
+
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "CAMERA",
+        "RECORD_AUDIO"
+      ],
+
+      "config": {
+        "googleMaps": {
+          "apiKey": "GOOGLE_MAP_API_KEY"
+        }
+      }
     },
+
+    "plugins": [
+      "expo-location",
+      "expo-camera"
+    ],
+
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-        }
-      ]
-    ]
+
+    "extra": {
+      "eas": {
+        "projectId": "332df551-6ebb-49ba-a948-0ecb9eb9b029"
+      }
+    }
   }
 }

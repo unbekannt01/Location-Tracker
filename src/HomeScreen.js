@@ -6,6 +6,7 @@ export default function HomeScreen({
   onStartTracking,
   onManageMembers,
   onAdminLocationTracking,
+  onCameraControl,
   onLogout,
   onChangePassword,
   userRole,
@@ -53,6 +54,7 @@ export default function HomeScreen({
               </Text>
             </View>
           )}
+          
           {/* Quick Actions */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Quick Actions</Text>
@@ -112,6 +114,24 @@ export default function HomeScreen({
                     <Text style={styles.actionArrow}>→</Text>
                   </View>
                 </TouchableOpacity>
+
+                <TouchableOpacity style={styles.actionCard} onPress={onCameraControl} activeOpacity={0.9}>
+                  <LinearGradient
+                    colors={["#43e97b", "#38f9d7"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.actionIconGradient}
+                  >
+                    <Text style={styles.actionEmoji}>📸</Text>
+                  </LinearGradient>
+                  <View style={styles.actionContent}>
+                    <Text style={styles.actionTitle}>Camera Control</Text>
+                    <Text style={styles.actionDescription}>Capture photos/videos from members</Text>
+                  </View>
+                  <View style={styles.arrowContainer}>
+                    <Text style={styles.actionArrow}>→</Text>
+                  </View>
+                </TouchableOpacity>
               </>
             )}
           </View>
@@ -137,6 +157,16 @@ export default function HomeScreen({
                 </Text>
               </View>
             </View>
+
+            {userRole === "admin" && (
+              <View style={styles.featureCard}>
+                <Text style={styles.featureEmoji}>📸</Text>
+                <View style={styles.featureContent}>
+                  <Text style={styles.featureTitle}>Remote Camera Access</Text>
+                  <Text style={styles.featureDescription}>Monitor members with photo/video capture</Text>
+                </View>
+              </View>
+            )}
 
             <View style={styles.featureCard}>
               <Text style={styles.featureEmoji}>📊</Text>

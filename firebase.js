@@ -1,11 +1,13 @@
 import { initializeApp } from "firebase/app"
 import { getDatabase } from "firebase/database"
+import { getStorage } from "firebase/storage"
 import { initializeAuth, getReactNativePersistence } from "firebase/auth"
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage"
 
 let firebaseApp = null
 let auth = null
 let db = null
+let storage = null
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -31,8 +33,13 @@ if (hasValidConfig) {
       persistence: getReactNativePersistence(ReactNativeAsyncStorage),
     })
 
+    // Initialize Realtime Database
     db = getDatabase(firebaseApp)
-    console.log("[Firebase] Initialized successfully")
+
+    // Initialize Firebase Storage for camera captures
+    storage = getStorage(firebaseApp)
+
+    console.log("[Firebase] Initialized successfully with Storage")
   } catch (error) {
     console.error("[Firebase] Initialization failed:", error.message)
   }
@@ -42,4 +49,4 @@ if (hasValidConfig) {
   )
 }
 
-export { firebaseApp, auth, db }
+export { firebaseApp, auth, db, storage }
